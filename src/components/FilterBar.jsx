@@ -27,11 +27,11 @@ const FilterBar = ({ selectedCategory, onCategoryChange }) => {
       alignItems="center"
       my={0}
       bg="white"
-      maxWidth="200px" // Adjust the maxWidth as needed
-      mx="auto" // Center the FilterBar horizontally
-      px={0} // Add horizontal padding
-      borderRadius="md" // Add border radius for styling
-      boxShadow="md" // Add box shadow for styling
+      maxWidth="200px"
+      mx="auto"
+      px={0}
+      borderRadius="md"
+      boxShadow="md"
     >
       <Select
         value={selectedCategory}

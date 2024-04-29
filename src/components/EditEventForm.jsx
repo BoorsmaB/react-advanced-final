@@ -16,9 +16,8 @@ import {
 
 const EditEventForm = ({ isOpen, onClose, event }) => {
   const toast = useToast();
-  const [editedEvent, setEditedEvent] = useState(null); // Initialize with null
+  const [editedEvent, setEditedEvent] = useState(null);
 
-  // Update state when event prop changes
   useEffect(() => {
     setEditedEvent(event);
   }, [event]);
@@ -31,7 +30,7 @@ const EditEventForm = ({ isOpen, onClose, event }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const editedEventData = { ...editedEvent }; // Create a copy of editedEvent
+      const editedEventData = { ...editedEvent };
       const response = await fetch(
         `http://localhost:3000/events/${editedEvent.id}`,
         {
@@ -39,11 +38,10 @@ const EditEventForm = ({ isOpen, onClose, event }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(editedEventData), // Use the copy in the request body
+          body: JSON.stringify(editedEventData),
         }
       );
       if (response.ok) {
-        // If update is successful, close the modal and show success toast
         onClose();
         toast({
           title: "Event updated",
@@ -75,7 +73,6 @@ const EditEventForm = ({ isOpen, onClose, event }) => {
     }
   };
 
-  // If event is not yet available, return null to avoid rendering the modal
   if (!editedEvent) {
     return null;
   }
