@@ -120,6 +120,18 @@ const EditEventForm = ({ isOpen, onClose, event }) => {
               onChange={handleInputChange}
             />
           </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>Image</FormLabel>
+            <Input
+              type="text"
+              name="image"
+              value={editedEvent.image}
+              onChange={handleInputChange}
+              placeholder="Enter image URL"
+              onFocus={(e) => e.target.select()}
+              select={MouseEvent}
+            />
+          </FormControl>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" onClick={handleSubmit}>

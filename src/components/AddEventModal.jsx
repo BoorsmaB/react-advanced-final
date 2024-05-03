@@ -20,51 +20,25 @@ const AddEventModal = ({ isOpen, onClose }) => {
     description: "",
     starttime: "",
     endtime: "",
-    image: null, // New state for image upload
+    image: "",
   });
 
-  const [imagePreview, setImagePreview] = useState(null); // State for image preview
-
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      const selectedFile = files[0];
-      // Check if the selected file is an image
-      if (selectedFile && selectedFile.type.startsWith("image/")) {
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: selectedFile,
-        }));
-        // Display image preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagePreview(reader.result);
-        };
-        reader.readAsDataURL(selectedFile);
-      } else {
-        // Handle invalid file type
-        console.error("Invalid file type. Please select an image file.");
-      }
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async () => {
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("title", formData.title);
-      formDataToSend.append("description", formData.description);
-      formDataToSend.append("starttime", formData.starttime);
-      formDataToSend.append("endtime", formData.endtime);
-      formDataToSend.append("image", formData.image);
-
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
-        body: formDataToSend,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
       if (response.ok) {
         console.log("Event added successfully:", formData);
@@ -125,20 +99,14 @@ const AddEventModal = ({ isOpen, onClose }) => {
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Image</FormLabel>
-            <Input type="file" name="image" onChange={handleChange} />
-          </FormControl>
-          {/* Image Preview */}
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Image Preview"
-              style={{
-                maxWidth: "100%",
-                maxHeight: "200px",
-                marginTop: "10px",
-              }}
+            <Input
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              placeholder="Enter image URL"
             />
-          )}
+          </FormControl>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={handleSubmit}>

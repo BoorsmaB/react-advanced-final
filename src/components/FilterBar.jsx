@@ -22,6 +22,13 @@ const FilterBar = ({ selectedCategory, onCategoryChange }) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const handleCategoryChange = (event) => {
+    // Log the selected category
+    console.log("Selected category:", event.target.value);
+    // Call the parent component's onCategoryChange function
+    onCategoryChange(event);
+  };
+
   return (
     <Flex
       alignItems="center"
@@ -35,7 +42,7 @@ const FilterBar = ({ selectedCategory, onCategoryChange }) => {
     >
       <Select
         value={selectedCategory}
-        onChange={onCategoryChange}
+        onChange={handleCategoryChange} // Call handleCategoryChange instead of onCategoryChange directly
         width="100%"
         mr={4}
       >
